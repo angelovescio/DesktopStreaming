@@ -12,12 +12,12 @@ Stops the nginx service on Windows, ffmpeg will exit automatically when it can n
 ## Config
 
 ### nginx.conf
-Creates an RTMP app and an HLS app to allow for Web stream
+Creates an RTMP app and an HLS app to allow for Web stream. Change the config paths to reflect where your directories are. Nginx, on Windows, changes the direction of slashes so "C:\Users\user\Downloads" changes to "C:/Users/user/Downloads". If you do not have an "hls" directory, create one under your nginx html directory.
 
 ## HTML and JS files
 
 ### video.html
-Provides a basic video player template, has the videojs CDN links already in there, but you can also use the local, minified JS copy
+Provides a basic video player template, has the videojs CDN links already in there, but you can also use the local, minified JS copy. You just need to change host:port in the file to your nginx hls host and port, specified in nginx.conf
 
 ### videojs-contrib-hls.min.js
 Contains the JavaScript necessary to render the player. Download the [latest from VideoJS](https://github.com/videojs/videojs-contrib-hls/releases)
@@ -34,3 +34,14 @@ Replace the ffmpeg -i video="<your video capture device>" and -i audio="<your au
 List your dshow capture devices with "ffmpeg -list_devices true -f dshow -i dummy" 
 For Windows, you can use gdigrab for the Desktop "-f gdigrab -i desktop" and Stereo Mix for the Audio (assuming you have it set up). For Stereo Mix setup go [here](https://appuals.com/how-to-restore-missing-stereo-mix-on-windows-10/). Replace whatever their Conexant drivers are with what your desktop audio supports, i.e. RealTek or other chipset. For a different type of audio tap go to [here](https://mediarealm.com.au/articles/stereo-mix-setup-windows-10/)
 ffmpeg documentation on streaming a Desktop is [here](https://trac.ffmpeg.org/wiki/Capture/Desktop)
+
+## Troubleshooting
+
+### I don't know if ffmpeg is working.
+Open up the Start_stream.bat file and remove "-loglevel 0". You can also run the ffmpeg command separately, in another cmd window. If you see a "stream.m3u8" file pop up in the "hls" directory, ffmpeg is creating the stream.
+
+### I don't know if nginx is working
+Check the error log in "logs". There should be a default one and one configured in nginx.conf. Open a commandline and type "netstat -ano | findstr 9001", replace "9001" with whatever port(s) nginx is configured to run on.
+
+### I think the video.html page is broken
+In Chrome, Brave, or Firefox, open up dev tools and look at the Console for errors. Also check the Network tab for any odd web requests. Then look at the Elements tab, and make sure the host:port of your streaming app is set properly. If everything is working otherwise, you should be able to point VLC to the nginx host and RTMP port in your nginx.conf (by default, the provided nginx.conf uses the standard RTMP port). "rtmp://localhost/show/stream" would be an example of a VLC network stream string.
