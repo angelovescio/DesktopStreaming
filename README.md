@@ -4,10 +4,10 @@ Windows nginx, config, HTML, and basic scripts to get an RTMP server set up with
 ## Batch scripts
 
 ### Start_stream.bat
-Starts the nginx service with the provided nginx.conf. Starts ffmpeg with the embedded commandline.
+Starts the nginx service with the provided nginx.conf. Starts ffmpeg with the embedded commandline. Change all paths to suit your nginx and ffmpeg locations, if present.
 
 ### Stop_stream.bat
-Stops the nginx service on Windows, ffmpeg will exit automatically when it can no longer access the RTMP server
+Stops the nginx service on Windows, ffmpeg will exit automatically when it can no longer access the RTMP server. Change all paths to suit your nginx and ffmpeg locations, if present.
 
 ## Config
 
@@ -45,3 +45,6 @@ Check the error log in "logs". There should be a default one and one configured 
 
 ### I think the video.html page is broken
 In Chrome, Brave, or Firefox, open up dev tools and look at the Console for errors. Also check the Network tab for any odd web requests. Then look at the Elements tab, and make sure the host:port of your streaming app is set properly. If everything is working otherwise, you should be able to point VLC to the nginx host and RTMP port in your nginx.conf (by default, the provided nginx.conf uses the standard RTMP port). "rtmp://localhost/show/stream" would be an example of a VLC network stream string.
+
+### I want to broadcast over a network
+We all do, and this was the entire point. Change your video.html host to your external IP (or domain name, if you have one set up already pointing to that IP). Note: This IP/Domain name will be something outside of your LAN, likely issued to you by your ISP hence the word "external". Forward the hls application port through your router. Follow whatever instructions are available for your particulare router. Most router admin pages call it "Single port forward". Put the internal IP of your nginx server as the destination IP and the port as the hls port in your nginx.conf. If your server is running on 192.168.1.5, and the hls application port (from nginx.conf) is 9001, you would (in your router config) put 9001 as the port to forward and 192.168.1.5 as the destination.
