@@ -32,3 +32,5 @@ Unzip and copy the contents of conf/ and html/ to their respective directories i
 Download latest [Windows ffmpeg binaries](https://ffmpeg.zeranoe.com/builds)
 Replace the ffmpeg -i video="<your video capture device>" and -i audio="<your audio capture device>"
 List your dshow capture devices with "ffmpeg -list_devices true -f dshow -i dummy" 
+For Windows, you can use gdigrab for the Desktop "-f gdigrab -i desktop" and Stereo Mix for the Audio (assuming you have it set up). For Stereo Mix setup go [here](https://appuals.com/how-to-restore-missing-stereo-mix-on-windows-10/). Replace whatever their Conexant drivers are with what your desktop audio supports, i.e. RealTek or other chipset. For a different type of audio tap go to [here](https://mediarealm.com.au/articles/stereo-mix-setup-windows-10/)
+ffmpeg documentation on streaming a Desktop is [here](https://trac.ffmpeg.org/wiki/Capture/Desktop)
