@@ -3,6 +3,9 @@ Windows nginx, config, HTML, and basic scripts to get an RTMP server set up with
 
 ## Batch scripts
 
+### First_Time_Install.bat
+Registers a DirectShow Loopback Filter so you can capture Audio from your Desktop along with video
+
 ### Start_stream.bat
 Starts the nginx service with the provided nginx.conf. Starts ffmpeg with the embedded commandline. Change all paths to suit your nginx and ffmpeg locations, if present.
 
